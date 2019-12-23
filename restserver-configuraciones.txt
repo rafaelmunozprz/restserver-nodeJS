@@ -5,3 +5,7 @@
 
 2. Instalar express
     2.1 npm install --save express
+
+3. GIT
+    git remote add origin https://github.com/rafaelmunozprz/restserver-nodeJS.git
+    git push -u origin master
