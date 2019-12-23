@@ -1,0 +1,7 @@
+1. Instalar mongo db 
+    1.1 Instalar mediante las "Instrucciones de Mongo DB"
+    1.2 Crear la carpeta de bases de datos "cd C:\ md "\data\db"
+    1.3 Ejecutar mongo db con la ruta de las bases de datos "C:\Program Files\MongoDB\Server\4.2\bin\mongod.exe" --dbpath="c:\data\db"
+
+2. Instalar express
+    2.1 npm install --save express
