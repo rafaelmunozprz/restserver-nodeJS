@@ -9,3 +9,11 @@
 3. GIT
     git remote add origin https://github.com/rafaelmunozprz/restserver-nodeJS.git
     git push -u origin master
+
+4. HEROKU
+    heroku git:clone -a rest-server-nodejs-curso
+    cd rest-server-nodejs-curso
+
+    git add *
+    git commit -am "make it better"
+    git push heroku master
