@@ -12,6 +12,9 @@ mongoose.connect('mongodb://localhost:27017/cafe',(error)=>{
     console.log('Base de datos ONLINE'.green);
 });
 
+/**
+ * Al utulizar esta función es necesario usar el x-www-urlencoded en postman
+ */
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
