@@ -9,6 +9,8 @@ let Schema = mongoose.Schema;
 
 /**
  * @param rolesValidados variables con los únicos roles válidos para registrar un usuario en la base de datos
+ * @param values Valors unicos que puede ingresar el usuario
+ * @param message mensaje de error en caso de ingresar un usuario no valido
  */
 let rolesValidados = {
     values: ['ADMIN-ROLE', 'USER-ROLE'],
