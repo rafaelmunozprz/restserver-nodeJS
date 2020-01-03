@@ -11,7 +11,47 @@ const Usuario = require('../models/usuario');
 const app = express();
 
 app.get('/usuario', (req, res) => {
-    res.json('get Usuario')
+
+    /** 
+     * @param desde variable que ingresa desde URL para saber el número de elemento desde donde será aplicado el QUERY (Obligatorio que sea un número)
+     * 
+     */
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+
+    /**
+     * @param limite Variable que es ingresada desde URL para determinar el número de registros que serán mostrador en cada QUERY
+     */
+    let limite = req.query.limite || 5;
+    limite = Number(limite);
+
+    //Usuario.find({condicion},'nombre email role estadao google img' (ESTO PUEDE SER OPCIONAL Y ES PARA HACER UN FILTRO DE LO QUE IRA EN EL RETORNO))
+    //Usuario.find({},'nombre email role estadao google img') -> TRAE TODOS LOS REGISTROS
+    Usuario.find({ estado: true }, 'nombre email role estadao google img') // -> TRAE SOLO LOS REGISTROS CON ESTADO TREUE
+        .skip(desde)
+        .limit(limite)
+        .exec((err, usuarios) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                })
+            }
+            //Usuario.count({ estado: true }, (err, conteo) => { -> CUENTA TODOS LOS USUARIOS DEL QUERY
+            Usuario.count({ estado: true }, (err, conteo) => { //-> CUANTA TODOS LOS USUARIOS CON ESTADO TRUE
+                if (err) {
+                    return res.status(400).json({
+                        ok: false,
+                        err
+                    })
+                }
+                res.json({
+                    ok: true,
+                    usuarios,
+                    cuantos: conteo
+                })
+            });
+        });
 })
 
 app.post('/usuario', (req, res) => {
@@ -56,8 +96,44 @@ app.put('/usuario/:id', (req, res) => {
     });
 })
 
-app.delete('/usuario', (req, res) => {
-    res.json('delete Usuario')
+app.delete('/usuario/:id', (req, res) => {
+    let id = req.params.id;
+    /* Usuario.findByIdAndRemove(id, (err, usuarioBorrado)=>{
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        // Se valida que el usuario haya sido encontrado dentro de la base de datos
+        if(!usuarioBorrado){
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Usuario no encontrado'
+                }
+            });
+        }
+        res.json({
+            ok: true,
+            usuario: usuarioBorrado
+        })
+    }) */
+    let cambiaEstado = {
+        estado: false
+    }
+    Usuario.findOneAndUpdate(id, cambiaEstado, { new: true }, (err, usuarioCambiado) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            usuarioCambiado: usuarioCambiado
+        })
+    });
 })
 
 module.exports = app;
