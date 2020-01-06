@@ -7,7 +7,7 @@ const color = require('colors');
  * Conexion a mongoose
  */
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/cafe',(error)=>{
+mongoose.connect(process.env.URLDB, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true},(error)=>{
     if(error) throw Error;
     console.log('Base de datos ONLINE'.green);
 });
