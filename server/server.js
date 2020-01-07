@@ -20,9 +20,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 /**
- * Archivo usuario importado al server
+ * configuracion global de rutas
  */
-app.use(require('./routes/usuario'));
+app.use(require('./routes/index'));
 
 app.listen(process.env.PORT, ()=>{
     console.log('Escuchado puerto: ', process.env.PORT);

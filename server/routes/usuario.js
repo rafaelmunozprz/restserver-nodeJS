@@ -8,9 +8,10 @@ const bcrypt = require('bcrypt');
  */
 const _unscr = require('underscore');
 const Usuario = require('../models/usuario');
+const verficaToken = require('../middlewares/autenticacion');
 const app = express();
 
-app.get('/usuario', (req, res) => {
+app.get('/usuario', verficaToken.verificaToken, (req, res) => {
 
     /** 
      * @param desde variable que ingresa desde URL para saber el número de elemento desde donde será aplicado el QUERY (Obligatorio que sea un número)
