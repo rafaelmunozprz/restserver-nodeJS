@@ -8,10 +8,15 @@ const bcrypt = require('bcrypt');
  */
 const _unscr = require('underscore');
 const Usuario = require('../models/usuario');
-const verficaToken = require('../middlewares/autenticacion');
+const {verificaToken, verificaRol} = require('../middlewares/autenticacion');
 const app = express();
 
-app.get('/usuario', verficaToken.verificaToken, (req, res) => {
+app.get('/usuario', verificaToken, (req, res) => {
+    /* return res.json({
+        usuario: req.usuario,
+        nombre: req.usuario.nombre,
+        email: req.usuario.email
+    }) */
 
     /** 
      * @param desde variable que ingresa desde URL para saber el número de elemento desde donde será aplicado el QUERY (Obligatorio que sea un número)
@@ -55,7 +60,7 @@ app.get('/usuario', verficaToken.verificaToken, (req, res) => {
         });
 })
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificaToken, verificaRol],(req, res) => {
     let body = req.body;
     let usuario = new Usuario({
         "nombre": body.nombre,
@@ -79,7 +84,7 @@ app.post('/usuario', (req, res) => {
     });
 })
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaRol], (req, res) => {
     let id = req.params.id;
     //_unscr.pick(todo_el_conjunto, [el_nombre_de_los_parametros_permitidos])
     let body = _unscr.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -97,7 +102,7 @@ app.put('/usuario/:id', (req, res) => {
     });
 })
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaRol], (req, res) => {
     let id = req.params.id;
     /* Usuario.findByIdAndRemove(id, (err, usuarioBorrado)=>{
         if (err) {
