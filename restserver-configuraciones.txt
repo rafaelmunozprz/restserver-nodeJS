@@ -10,6 +10,10 @@
     git remote add origin https://github.com/rafaelmunozprz/restserver-nodeJS.git
     git push -u origin master
 
+    GIT RELEASES
+    git tag -a vX.X.X -m 'NOMBRE DEL RELEASE'
+    git push --tags
+
 4. HEROKU
     heroku git:clone -a rest-server-nodejs-curso
     cd rest-server-nodejs-curso
