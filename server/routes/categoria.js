@@ -39,6 +39,7 @@ app.put('/categoria/:id', (req,res)=>{
 
 /**
  * DELETE: Solo permitido por un ADMIN-ROLE
+ * ELIMINAR REGISTRO
  */
 app.delete('/categoria/:id', (req,res)=>{
 
