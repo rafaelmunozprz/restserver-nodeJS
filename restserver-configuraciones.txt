@@ -29,5 +29,5 @@
     usuario: root-restserverNodeJS
     password: p6NSE88fn4y3spWz
 
-    mongodb+srv://root-restserverNodeJS:p6NSE88fn4y3spWz@restserver-nodejs-u0rym.mongodb.net/test
+    mongodb+srv://root-restserverNodeJS:p6NSE88fn4y3spWz@restserver-nodejs-u0rym.mongodb.net/cafe
 

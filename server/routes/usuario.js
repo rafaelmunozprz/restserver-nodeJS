@@ -87,7 +87,7 @@ app.post('/usuario', [verificaToken, verificaRol],(req, res) => {
 app.put('/usuario/:id', [verificaToken, verificaRol], (req, res) => {
     let id = req.params.id;
     //_unscr.pick(todo_el_conjunto, [el_nombre_de_los_parametros_permitidos])
-    let body = _unscr.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
+    let body = _unscr.pick(req.body, ['descripcion', 'email', 'img', 'role', 'estado']);
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
         if (err) {
             return res.status(400).json({
