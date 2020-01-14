@@ -13,6 +13,7 @@ let app = express();
  * @param Producto esquema de base de datos Mongoose
  */
 let Producto = require('../models/producto');
+
 /**
  * OBTENER TODOS LOS PRODUCTOS
  */
@@ -20,8 +21,8 @@ app.get('/productos', verificaToken, (req, res) => {
     //Trae todo los productos
     //populate: debe de cargar la info del usuario y la categoria
     //paginado
-    Producto.find({disponible: true})
-        .sort('precio')
+    Producto.find({ disponible: true })
+        .sort('precioUni')
         .populate('usuario', 'nombre email')
         .populate('categoria', 'descripcion')
         .exec((err, productos) => {
@@ -32,6 +33,30 @@ app.get('/productos', verificaToken, (req, res) => {
                         message: 'Error interno del servidor al cargar todas las categorias'
                     }
                 })
+            }
+            res.json({
+                ok: true,
+                productos
+            })
+        });
+});
+
+/**
+ * BUSCAR PRODUCTOS
+ */
+app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
+    let termino = req.params.termino;
+    let regex = new RegExp(termino, 'i');
+    Producto.find({descripcion: regex})
+        .populate('categoria', 'descripcion')
+        .exec((err, productos) => {
+            if(err){
+                return res.status(500).json({
+                    ok: false,
+                    err: {
+                        message: 'Error interno al buscar producto'
+                    }
+                });
             }
             res.json({
                 ok: true,
@@ -120,8 +145,8 @@ app.put('/productos/:id', verificaToken, (req, res) => {
     //grabar una categoria
     let id = req.params.id;
     let body = _unscr.pick(req.body, ['nombre', 'precio', 'descripcion', 'categoria']);
-    Producto.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, productoDB)=>{
-        if(err){
+    Producto.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, productoDB) => {
+        if (err) {
             return res.status(500).json({
                 ok: false,
                 err: {
@@ -129,7 +154,7 @@ app.put('/productos/:id', verificaToken, (req, res) => {
                 }
             })
         }
-        if(!productoDB){
+        if (!productoDB) {
             return res.status(400).json({
                 ok: false,
                 err: {
@@ -153,8 +178,8 @@ app.delete('/productos/:id', verificaToken, (req, res) => {
     let cambioDisponible = {
         disponible: false
     }
-    Producto.findOneAndUpdate(id, cambioDisponible, {new: true, useFindAndModify: true}, (err, productoDB)=>{
-        if(err){
+    Producto.findOneAndUpdate(id, cambioDisponible, { new: true, useFindAndModify: true }, (err, productoDB) => {
+        if (err) {
             return res.status(500).json({
                 ok: false,
                 err: {
@@ -162,7 +187,7 @@ app.delete('/productos/:id', verificaToken, (req, res) => {
                 }
             })
         }
-        if(!productoDB){
+        if (!productoDB) {
             return res.status(400).json({
                 ok: false,
                 err: 'Este producto no se encuentra en la base de datos'
