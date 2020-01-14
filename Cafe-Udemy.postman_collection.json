@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "aabed414-f1ff-426b-befb-d90e855f9600",
+		"_postman_id": "6a61dc4e-1f13-42cf-8754-fa13885ab6a5",
 		"name": "Cafe-Udemy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -112,7 +112,7 @@
 					]
 				},
 				"url": {
-					"raw": "{{url}}/usuario/5e0df1538cf3de3bf847d8d4",
+					"raw": "{{url}}/usuario/5e0df1538cf3de3bf847d8d4?=",
 					"host": [
 						"{{url}}"
 					],
@@ -264,7 +264,7 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "test3@hotmail.com",
+							"value": "rafaelm.perez@hotmail.com",
 							"type": "text"
 						},
 						{
@@ -368,7 +368,7 @@
 					]
 				},
 				"url": {
-					"raw": "{{url}}/categoria",
+					"raw": "{{url}}/categoria?",
 					"host": [
 						"{{url}}"
 					],
@@ -559,28 +559,33 @@
 					"urlencoded": [
 						{
 							"key": "nombre",
-							"value": "Chocomilk",
+							"value": "Pastel de chocolate",
 							"type": "text"
 						},
 						{
 							"key": "precio",
-							"value": "15",
+							"value": "25",
 							"type": "text"
 						},
 						{
 							"key": "descripcion",
-							"value": "Bebida a base de leche adicionada con chocolate",
+							"value": "Pastel de tres leches con mermelada",
+							"type": "text"
+						},
+						{
+							"key": "categoria",
+							"value": "5e1dfaabfcdd7b21644c81ef",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "{{url}}/producto",
+					"raw": "{{url}}/productos",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"producto"
+						"productos"
 					]
 				},
 				"description": "Crea un nuevo producto"
@@ -735,6 +740,45 @@
 					]
 				},
 				"description": "Elimina un producto mediante ID"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Productos: Busqueda por filtro ",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/productos/buscar/pollo",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"productos",
+						"buscar",
+						"pollo"
+					]
+				},
+				"description": "Busca un regisrode la base de datos por coincidencia"
 			},
 			"response": []
 		}
