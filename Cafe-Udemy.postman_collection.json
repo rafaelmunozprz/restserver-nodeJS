@@ -1,0 +1,743 @@
+{
+	"info": {
+		"_postman_id": "aabed414-f1ff-426b-befb-d90e855f9600",
+		"name": "Cafe-Udemy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuario: POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "Test 3",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test4@hotmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/usuario?nombre=Test 1&email=test1@hotmail.com&password=123456",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuario"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Test 1"
+						},
+						{
+							"key": "email",
+							"value": "test1@hotmail.com"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				},
+				"description": "Creamos un usuario de BD"
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario: PUT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "Test 1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "ADMIN-ROLE",
+							"type": "text"
+						},
+						{
+							"key": "google",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/usuario/5e0df1538cf3de3bf847d8d4",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuario",
+						"5e0df1538cf3de3bf847d8d4"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				},
+				"description": "Actualiza \"Usuario\" menos \"Contraseña y Google status\""
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario: GET Usuario por paginación",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "931f1a51-0d58-4725-a378-054884b63566",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e84bb4b1-27a5-418c-9900-0258bcda989d",
+						"exec": [
+							"console.log('Hola mundo');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/usuario?limite=0&desde=0",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuario"
+					],
+					"query": [
+						{
+							"key": "limite",
+							"value": "0"
+						},
+						{
+							"key": "desde",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Obtenemos todos los usuarios por página y limite"
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario: DELETE ",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/usuario/5e0f38e380fe6f3f94db8a4b",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuario",
+						"5e0f38e380fe6f3f94db8a4b"
+					]
+				},
+				"description": "Borrar usuario por completo por ID de la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "Login: Normal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4225475-cae4-4356-8144-122c77a7f769",
+						"exec": [
+							"let resp = pm.response.json();",
+							"if(resp.ok){",
+							"    let token = resp.token;",
+							"    pm.environment.set(\"token\", token);",
+							"}else{",
+							"    console.log('No se actualizó el token');",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "test3@hotmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "Login normal"
+			},
+			"response": []
+		},
+		{
+			"name": "Login: Google",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cfe9c11c-9b62-4266-99ed-19025c33cf62",
+						"exec": [
+							"let resp = pm.response.json();",
+							"if(resp.ok){",
+							"    let token = resp.token;",
+							"    pm.environment.set(\"token\", token);",
+							"}else{",
+							"    console.log('No se actualizó el token');",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "idtoken",
+							"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkMjM0OTg4ZTNhYWU2N2FmYmMwMmNiMWM0MTQwYjNjZjk2ODJjYWEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiOTI1MjE2OTI4MzctdDhqMGw2djFsamI4OG0xaW82OG1uM2I1MDRhbHExdjMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI5MjUyMTY5MjgzNy10OGowbDZ2MWxqYjg4bTFpbzY4bW4zYjUwNGFscTF2My5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExNjMzNTQyNDQ1MzE5MDM3NDUzMCIsImhkIjoiYWx1bW5vcy51ZGcubXgiLCJlbWFpbCI6InJhZmFlbC5tdW5vekBhbHVtbm9zLnVkZy5teCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiLXRJUnpmMGFUSXBTb0o5RjhNWE9WUSIsIm5hbWUiOiJSQUZBRUwgTVVOT1ogUEVSRVoiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FBdUU3bUM2VmhraE51b25kdU1qYUhWaU40Ri1CRFhyWXRfV3UybnhSMUJPPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IlJBRkFFTCIsImZhbWlseV9uYW1lIjoiTVVOT1ogUEVSRVoiLCJsb2NhbGUiOiJlcyIsImlhdCI6MTU3ODU3ODkxMCwiZXhwIjoxNTc4NTgyNTEwLCJqdGkiOiJmYjdlNWYzNjIzMmJkMjllY2MyZGE1NTdlODcyMjZhYWM1Y2IwNTI0In0.BtJ6_hJV2o6hTR8fXcb3VQFqMJ05YspfZAJbJcuLwUu-xvPHJjZ7x1cyNczbFCX0E_16GZr5Nadxe18zMhY9hWeoENcFj9aIQj8OKy5oo_NgFWm1Wx9gr-ii1Q7wV2Spb74XnaHGYaHFRNlL9mlHU2H24UvyLSvOqOkhM7Q2KNs4finxWSomIAcNfiPbMLXbuWIuU9Iv0FWgJGZdbb7F9nOAcIW4jG6ytGbVmlcHh-nL6J1omgR-ZACOBQNoAkFLU2SqTTIzqCtMuJf688UB-_OavlLGgxZa2Ssy1HUrDrk8mPNc81wrwqyvPtq59da9LI4xGF40lPDAxVA7ssyi8g",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/google",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"google"
+					]
+				},
+				"description": "Login con Google mediante tokens"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Catergoria: Crear categoria",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "descripcion",
+							"value": "Bebida fria",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/categoria",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categoria"
+					],
+					"query": [
+						{
+							"key": "descripcion",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Post para crear categoria"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Categoria: Actualizar categoría",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "descripcion",
+							"value": "Bebida caliente",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/categoria/5e1cec8df62c5d08c011aa3b",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categoria",
+						"5e1cec8df62c5d08c011aa3b"
+					]
+				},
+				"description": "Actualiza una categoría por ID"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Categoria: Borrar categoría",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/categoria/5e1cf35cf5f2d3370cd42b8f",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categoria",
+						"5e1cf35cf5f2d3370cd42b8f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Categorias: Carga todas las categorias",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/categoria",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categoria"
+					]
+				},
+				"description": "Carga toda las categorias dentro de la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Categoria: Carga una categoria por ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/categoria/5e1cf5f397cfa506782a4125",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"categoria",
+						"5e1cf5f397cfa506782a4125"
+					]
+				},
+				"description": "Carga una categoria por ID"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Producto: Crear producto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "Chocomilk",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "descripcion",
+							"value": "Bebida a base de leche adicionada con chocolate",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/producto",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"producto"
+					]
+				},
+				"description": "Crea un nuevo producto"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Producto: Carga todos los productos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/productos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"productos"
+					]
+				},
+				"description": "Carga todo los productos dentro de la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Producto: Carga un producto por ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/productos/5e1d0399c6b59239142a88f9",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"productos",
+						"5e1d0399c6b59239142a88f9"
+					]
+				},
+				"description": "Carga el producto mediante ID"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Producto: Acutaliza producto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "Bebida con chocolate y fresa light",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/productos/5e1d03c8c6b59239142a88fa",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"productos",
+						"5e1d03c8c6b59239142a88fa"
+					]
+				},
+				"description": "Actualiza un producto por ID"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Producto: Elimina un producto",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/productos/5e1d0399c6b59239142a88f9",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"productos",
+						"5e1d0399c6b59239142a88f9"
+					]
+				},
+				"description": "Elimina un producto mediante ID"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -15,14 +15,54 @@ let Categoria = require('../models/categoria');
  * ====================================
  */
 app.get('/categoria', verificaToken, (req, res) => {
-
+    Categoria.find({})
+        //Sort nos permite ordenar la salida
+        .sort('descripcion')
+        //pupolate nos permite mostrar la informacion de los objectID (ESQUEMA) que se encuentren dentro del find
+        .populate('usuario', 'nombre email')
+        .exec((err, categorias) => {
+            if (err) {
+                return err.status(500).json({
+                    ok: false,
+                    err: {
+                        message: 'Error interno del servidor'
+                    }
+                })
+            }
+            res.json({
+                ok: true,
+                categorias
+            });
+        });
 });
 
 /**
  * GET SOLO UN ID
  */
 app.get('/categoria/:id', verificaToken, (req, res) => {
-    Catergoria.findById();
+    let id = req.params.id;
+    Categoria.findById(id, (err, categoriaDB) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err: {
+                    message: 'Error interno al cargar categoria por ID'
+                }
+            })
+        }
+        if (!categoriaDB) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Categoría no encontrada por ID'
+                }
+            })
+        }
+        res.json({
+            ok: true,
+            categoria: categoriaDB
+        })
+    })
 });
 
 /**
@@ -53,7 +93,7 @@ app.post('/categoria', verificaToken, (req, res) => {
             });
         }
         res.json({
-            ok: false,
+            ok: true,
             categoria: categoriaDB
         })
     });
@@ -65,11 +105,32 @@ app.post('/categoria', verificaToken, (req, res) => {
  */
 app.put('/categoria/:id', verificaToken, (req, res) => {
     let id = req.params.id;
-    let body = _unscr.pick(req.body, ['descripcion']);
+    let body = req.body;
     let descCategoria = {
         descripcion: body.descripcion
     };
-    Categoria.findByIdAndUpdate(id, { descCategoria }, {new: true, runValidators: true});
+    Categoria.findByIdAndUpdate(id, descCategoria, { new: true, runValidators: true }, (err, categoriaDB) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err: {
+                    message: 'Error interno del servidor'
+                }
+            });
+        }
+        if (!categoriaDB) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Categoria no encotrada'
+                }
+            })
+        }
+        res.json({
+            ok: true,
+            categoria: categoriaDB
+        })
+    });
 });
 
 /**
@@ -77,7 +138,29 @@ app.put('/categoria/:id', verificaToken, (req, res) => {
  * ELIMINAR REGISTRO
  */
 app.delete('/categoria/:id', [verificaToken, verificaRol], (req, res) => {
-
+    let id = req.params.id;
+    Categoria.findOneAndRemove(id, (err, categoriaDB) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err: {
+                    message: 'Error interno del servidor'
+                }
+            })
+        }
+        if (!categoriaDB) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Categoria no encontrada'
+                }
+            })
+        }
+        res.json({
+            ok: true,
+            message: 'Categoria borrada'
+        })
+    })
 });
 
 module.exports = app;

@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/**
+ * @param categoriaSchema Esquema de base de datos para productos con Mongoose
+ */
 let categoriaSchema = new Schema({
     descripcion: {
         type: String,
