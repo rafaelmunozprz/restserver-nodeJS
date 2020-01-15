@@ -23,7 +23,8 @@
     git push heroku master
 
 5. Ruta del servicio
-    C:\AppServ\www\restserver-nodeJs
+    cd C:\AppServ\www\restserver-nodeJs
+    nodemon server/server
 
 6. Contraseña MLab
     usuario: root-restserverNodeJS
